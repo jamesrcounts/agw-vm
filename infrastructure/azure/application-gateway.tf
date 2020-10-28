@@ -45,12 +45,15 @@ resource "azurerm_application_gateway" "agw" {
 
   backend_address_pool {
     name = local.backend_address_pool_name
+    ip_addresses = [
+      azurerm_public_ip.publicip_vm.ip_address
+    ]
   }
 
   backend_http_settings {
     name                  = local.http_setting_name
     cookie_based_affinity = "Disabled"
-    path                  = "/path1/"
+    path                  = "/"
     port                  = 80
     protocol              = "Http"
     request_timeout       = 60
@@ -69,5 +72,17 @@ resource "azurerm_application_gateway" "agw" {
     http_listener_name         = local.listener_name
     backend_address_pool_name  = local.backend_address_pool_name
     backend_http_settings_name = local.http_setting_name
+  }
+
+  ssl_policy {
+    policy_type = "Predefined"
+    policy_name = "AppGwSslPolicy20170401S"
+  }
+
+  waf_configuration {
+    enabled          = true
+    firewall_mode    = "Prevention"
+    rule_set_type    = "OWASP"
+    rule_set_version = "3.1"
   }
 }
