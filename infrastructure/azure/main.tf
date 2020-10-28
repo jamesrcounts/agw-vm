@@ -1,5 +1,5 @@
 locals {
-  project = "tfaz"
+  project = "agw-correlation"
 
   tags = {
     Environment = "Test"
