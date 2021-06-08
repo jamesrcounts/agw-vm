@@ -6,17 +6,17 @@ locals {
 # Create public IP
 resource "azurerm_public_ip" "publicip_vm" {
   allocation_method   = "Static"
-  location            = azurerm_resource_group.example.location
+  location            = data.azurerm_resource_group.example.location
   name                = "pip-${local.vm_name}"
-  resource_group_name = azurerm_resource_group.example.name
+  resource_group_name = data.azurerm_resource_group.example.name
   sku                 = "Standard"
 }
 
 # Create network interface
 resource "azurerm_network_interface" "nic" {
-  location            = azurerm_resource_group.example.location
+  location            = data.azurerm_resource_group.example.location
   name                = "nic-${local.vm_name}"
-  resource_group_name = azurerm_resource_group.example.name
+  resource_group_name = data.azurerm_resource_group.example.name
 
   ip_configuration {
     name                          = local.ip_configuration_name
@@ -41,10 +41,10 @@ resource "azurerm_network_interface_security_group_association" "nsg_to_nic" {
 
 # Create a Linux virtual machine
 resource "azurerm_virtual_machine" "vm" {
-  location              = azurerm_resource_group.example.location
+  location              = data.azurerm_resource_group.example.location
   name                  = local.vm_name
   network_interface_ids = [azurerm_network_interface.nic.id]
-  resource_group_name   = azurerm_resource_group.example.name
+  resource_group_name   = data.azurerm_resource_group.example.name
   vm_size               = "Standard_DS1_v2"
 
   storage_os_disk {

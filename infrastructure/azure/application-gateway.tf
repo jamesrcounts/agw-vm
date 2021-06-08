@@ -11,16 +11,16 @@ locals {
 
 resource "azurerm_public_ip" "publicip_agw" {
   allocation_method   = "Static"
-  location            = azurerm_resource_group.example.location
+  location            = data.azurerm_resource_group.example.location
   name                = "pip-${local.application_gateway_name}"
-  resource_group_name = azurerm_resource_group.example.name
+  resource_group_name = data.azurerm_resource_group.example.name
   sku                 = "Standard"
 }
 
 resource "azurerm_application_gateway" "agw" {
   name                = local.application_gateway_name
-  resource_group_name = azurerm_resource_group.example.name
-  location            = azurerm_resource_group.example.location
+  resource_group_name = data.azurerm_resource_group.example.name
+  location            = data.azurerm_resource_group.example.location
 
   sku {
     name     = "WAF_v2"
