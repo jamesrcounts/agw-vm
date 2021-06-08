@@ -15,14 +15,6 @@ terraform {
       version = "~> 3.0.0"
     }
   }
-  
-  backend "remote" {
-    organization = "jamesrcounts"
-
-    workspaces {
-      name = "agw-vm"
-    }
-  }
 }
 
 provider azurerm {
