@@ -3,7 +3,7 @@
 	"build": {
 		"dockerfile": "Dockerfile",
 		"args": { 
-			"TERRAFORM_VERSION": "0.15.4",
+			"TERRAFORM_VERSION": "1.0.11",
 			"TFLINT_VERSION": "0.18.0",
 			"INSTALL_AZURE_CLI": "true",
 			"INSTALL_DOCKER": "true",
@@ -14,7 +14,7 @@
 
 	// Set *default* container specific settings.json values on container create.
 	"settings": { 
-		"terminal.integrated.shell.linux": "/bin/bash"
+		"terminal.integrated.defaultProfile.linux": "zsh"
 	},
 
 	// Add the IDs of extensions you want installed when the container is created.

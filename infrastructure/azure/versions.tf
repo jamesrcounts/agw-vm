@@ -1,5 +1,5 @@
 terraform {
-  required_version = ">= 0.13"
+  required_version = ">= 1"
 
   backend "azurerm" {}
 
@@ -19,7 +19,9 @@ terraform {
   }
 }
 
-provider azurerm {
+provider "azurerm" {
+  subscription_id = var.env_subscription_id
+
   features {
     key_vault {
       recover_soft_deleted_key_vaults = true
