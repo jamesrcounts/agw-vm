@@ -1,9 +1,10 @@
 # Create virtual network
 resource "azurerm_virtual_network" "vnet" {
-  name                = "vnet-${local.project}"
+  name                = "vnet-${local.instance_id}"
   address_space       = ["10.0.0.0/16"]
   location            = data.azurerm_resource_group.example.location
   resource_group_name = data.azurerm_resource_group.example.name
+  tags                = local.tags
 }
 
 # Create subnets

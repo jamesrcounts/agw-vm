@@ -1,5 +1,5 @@
 locals {
-  application_gateway_name       = "agw-${local.project}"
+  application_gateway_name       = "agw-${local.instance_id}"
   backend_address_pool_name      = "${local.application_gateway_name}-beap"
   frontend_port_name             = "${local.application_gateway_name}-feport"
   frontend_ip_configuration_name = "${local.application_gateway_name}-feip"
@@ -15,12 +15,14 @@ resource "azurerm_public_ip" "publicip_agw" {
   name                = "pip-${local.application_gateway_name}"
   resource_group_name = data.azurerm_resource_group.example.name
   sku                 = "Standard"
+  tags                = local.tags
 }
 
 resource "azurerm_application_gateway" "agw" {
   name                = local.application_gateway_name
   resource_group_name = data.azurerm_resource_group.example.name
   location            = data.azurerm_resource_group.example.location
+  tags                = local.tags
 
   sku {
     name     = "WAF_v2"

@@ -2,6 +2,7 @@ resource "azurerm_network_security_group" "nsg" {
   name                = "nsg-web"
   location            = data.azurerm_resource_group.example.location
   resource_group_name = data.azurerm_resource_group.example.name
+  tags                = local.tags
 }
 
 resource "azurerm_network_security_rule" "ssh" {

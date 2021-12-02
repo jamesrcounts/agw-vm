@@ -1,6 +1,6 @@
 locals {
   ip_configuration_name = "vm-nic-config"
-  vm_name               = "vm-${local.project}"
+  vm_name               = "vm-${local.instance_id}"
 }
 
 # Create public IP
@@ -10,6 +10,7 @@ resource "azurerm_public_ip" "publicip_vm" {
   name                = "pip-${local.vm_name}"
   resource_group_name = data.azurerm_resource_group.example.name
   sku                 = "Standard"
+  tags                = local.tags
 }
 
 # Create network interface
@@ -17,6 +18,7 @@ resource "azurerm_network_interface" "nic" {
   location            = data.azurerm_resource_group.example.location
   name                = "nic-${local.vm_name}"
   resource_group_name = data.azurerm_resource_group.example.name
+  tags                = local.tags
 
   ip_configuration {
     name                          = local.ip_configuration_name
@@ -25,13 +27,6 @@ resource "azurerm_network_interface" "nic" {
     subnet_id                     = azurerm_subnet.subnet.id
   }
 }
-
-// # Add nic to load balancer
-// resource "azurerm_network_interface_backend_address_pool_association" "example" {
-//   network_interface_id    = azurerm_network_interface.nic.id
-//   ip_configuration_name   = local.ip_configuration_name
-//   backend_address_pool_id = azurerm_lb_backend_address_pool.example.id
-// }
 
 # Add nic to nsg
 resource "azurerm_network_interface_security_group_association" "nsg_to_nic" {
@@ -46,6 +41,7 @@ resource "azurerm_virtual_machine" "vm" {
   network_interface_ids = [azurerm_network_interface.nic.id]
   resource_group_name   = data.azurerm_resource_group.example.name
   vm_size               = "Standard_DS1_v2"
+  tags                  = local.tags
 
   storage_os_disk {
     caching           = "ReadWrite"
