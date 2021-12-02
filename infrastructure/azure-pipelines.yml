@@ -59,7 +59,7 @@ stages:
 
                 terraform plan \
                   -input=false \
-                  -var="resource_group_name=rg-${AZURE_ENV_INSTANCE_ID}" \
+                  -var="resource_group_name=${AZURE_ENV_RG}" \
                   -var="env_subscription_id=${AZURE_ENV_SUBSCRIPTION_ID}" \
                   -out ${BUILD_BUILDNUMBER}.tfplan
 
